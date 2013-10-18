@@ -1,0 +1,21 @@
+<!DOCTYPE html>   
+<html>
+<head>
+<style> /* This is a CSS style sheet: it adds style to the program output */
+
+</style>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+	<script>
+		
+		var o = {x:1,y:{z:[false,null,""]}};
+		s = JSON.stringify(o);
+		p = JSON.parse(s);
+		
+		$("body").append("<br>p.x:"+p.x);
+		$("body").append("<br>p.y:"+JSON.stringify(p.y));
+	</script>
+</body>
+</html>
+

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0px; padding: 0px }
+      #map { height: 100% }
+    </style>
+
+    <script src="http://maps.google.com/maps/api/js?v=3&sensor=false"
+        type="text/javascript" charset="UTF-8"></script>
+
+    <script type="text/javascript">
+    //<![CDATA[
+
+    var N = 50;  // points
+    var N2 = 60; // for delta
+
+    var INTERVAL = 50;
+    var NPAUSE = 40;
+
+    var latlng;
+    var n = 0;
+    var n2 = 0;
+    var n3 = 0;
+
+    var delta_lat;
+    var delta_lng;
+
+    var map;
+    var infowin;
+
+    var msg;
+    
+    // 初期化。bodyのonloadでinit()を指定することで呼び出してます
+    function init() {
+
+      latlng = new Array(N);
+      msg = new Array(N);
+
+      for (var i = 0; i < N; i++) {
+        msg[i] = null;
+      }
+
+      //
+      latlng[0] = new google.maps.LatLng(35.69839680452033, 139.77325916290283);
+      msg[0] = "秋葉原";
+
+      // 
+      latlng[1] = new google.maps.LatLng(35.70756223398587, 139.77484703063965);
+      msg[1] = "御徒町";
+
+      //
+      latlng[2] = new google.maps.LatLng(35.71373000966154, 139.77686405181885);
+      msg[2] = "上野";
+
+      latlng[3] = new google.maps.LatLng(35.718364238896534, 139.7801685333252);
+
+      //
+      latlng[4] = new google.maps.LatLng(35.72244074404547, 139.77720737457275);
+      msg[4] = "鴬谷";
+
+      //
+      latlng[5] = new google.maps.LatLng(35.72771898568695, 139.7710919380188);
+      msg[5] = "日暮里";
+
+      //
+      latlng[6] = new google.maps.LatLng(35.732056288804365, 139.7668218612671);
+      msg[6] = "西日暮里";
+
+      //
+      latlng[7] = new google.maps.LatLng(35.73804799771853, 139.76107120513916);
+      msg[7] = "田端";
+
+      latlng[8] = new google.maps.LatLng(35.74045152168119, 139.7563934326172);
+
+      //
+      latlng[9] = new google.maps.LatLng(35.73637593825644, 139.74708080291748);
+      msg[9] = "駒込";
+
+      //
+      latlng[10] = new google.maps.LatLng(35.73351942211786, 139.73944187164307);
+      msg[10] = "巣鴨";
+
+      latlng[11] = new google.maps.LatLng(35.73104601439998, 139.73339080810547);
+
+      //
+      latlng[12] = new google.maps.LatLng(35.731533734677974, 139.72867012023926);
+      msg[12] = "大塚";
+
+      latlng[13] = new google.maps.LatLng(35.73480835062284, 139.71656799316406);
+
+      latlng[14] = new google.maps.LatLng(35.7335542582977, 139.713134765625);
+
+      //
+      latlng[15] = new google.maps.LatLng(35.729652511434224, 139.71086025238037);
+      msg[15] = "池袋";
+
+      //
+      latlng[16] = new google.maps.LatLng(35.721081932170264, 139.70656871795654);
+      msg[16] = "目白";
+
+      //
+      latlng[17] = new google.maps.LatLng(35.712510430860604, 139.70373630523682);
+      msg[17] = "高田馬場";
+
+      //
+      latlng[18] = new google.maps.LatLng(35.701393981044866, 139.70026016235352);
+      msg[18] = "新大久保";
+
+      //
+      latlng[19] = new google.maps.LatLng(35.69024112601506, 139.7004747390747);
+      msg[19] = "新宿";
+
+      //
+      latlng[20] = new google.maps.LatLng(35.68379267021536, 139.7023630142212);
+      msg[20] = "代々木";
+
+      latlng[21] = new google.maps.LatLng(35.67619328033399, 139.70412254333496);
+
+      //
+      latlng[22] = new google.maps.LatLng(35.67012719291238, 139.70244884490967);
+      msg[22] = "原宿";
+
+      latlng[23] = new google.maps.LatLng(35.66454877461668, 139.70163345336914);
+
+      //
+      latlng[24] = new google.maps.LatLng(35.65858640915274, 139.7014617919922);
+      msg[24] = "渋谷";
+
+      latlng[25] = new google.maps.LatLng(35.65255385537925, 139.70643997192383);
+
+      //
+      latlng[26] = new google.maps.LatLng(35.646695216791066, 139.71008777618408);
+      msg[26] = "恵比寿";
+
+      latlng[27] = new google.maps.LatLng(35.640696641685814, 139.71356391906738);
+
+      //
+      latlng[28] = new google.maps.LatLng(35.63403490559256, 139.71579551696777);
+      msg[28] = "目黒";
+
+      latlng[29] = new google.maps.LatLng(35.63086079414289, 139.71673965454102);
+
+      latlng[30] = new google.maps.LatLng(35.62897719589303, 139.7197437286377);
+
+      //
+      latlng[31] = new google.maps.LatLng(35.62555870052708, 139.72420692443848);
+      msg[31] = "五反田";
+
+      //
+      latlng[32] = new google.maps.LatLng(35.61962831085416, 139.7283697128296);
+      msg[32] = "大崎";
+
+      latlng[33] = new google.maps.LatLng(35.61736069268984, 139.73034381866455);
+
+      latlng[34] = new google.maps.LatLng(35.61690716134151, 139.73317623138428);
+
+      latlng[35] = new google.maps.LatLng(35.617709561207754, 139.73596572875977);
+
+      //
+      latlng[36] = new google.maps.LatLng(35.62834931994719, 139.73931312561035);
+      msg[36] = "品川";
+
+      latlng[37] = new google.maps.LatLng(35.637278647504395, 139.74291801452637);
+
+      latlng[38] = new google.maps.LatLng(35.64383548715619, 139.74472045898438);
+
+      //
+      latlng[39] = new google.maps.LatLng(35.64571873525347, 139.74763870239258);
+      msg[39] = "田町";
+
+      latlng[40] = new google.maps.LatLng(35.648090169712766, 139.75253105163574);
+
+      latlng[41] = new google.maps.LatLng(35.651437957346374, 139.75622177124023);
+
+      //
+      latlng[42] = new google.maps.LatLng(35.655343532257, 139.75699424743652);
+      msg[42] = "浜松町";
+
+      latlng[43] = new google.maps.LatLng(35.660992329498136, 139.758882522583);
+
+      //
+      latlng[44] = new google.maps.LatLng(35.6663618033194, 139.75828170776367);
+      msg[44] = "新橋";
+
+      latlng[45] = new google.maps.LatLng(35.66894181164049, 139.75836753845215);
+
+      latlng[46] = new google.maps.LatLng(35.67305570647014, 139.76068496704102);
+
+      //
+      latlng[47] = new google.maps.LatLng(35.674938265590164, 139.76317405700684);
+      msg[47] = "有楽町";
+
+      //
+      latlng[48] = new google.maps.LatLng(35.68093426903065, 139.76746559143066);
+      msg[48] = "東京";
+
+      //
+      latlng[49] = new google.maps.LatLng(35.691530754623024, 139.77081298828125);
+      msg[49] = "神田";
+
+
+      // Google Mapで利用する初期設定用の変数
+      var opts = {
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        center: latlng[0]
+      };
+
+      // getElementById("map")の"map"は、body内の<div id="map">より
+      map = new google.maps.Map(document.getElementById("map"), opts);
+
+      infowin = new google.maps.InfoWindow({position:latlng[0], content:msg[0]});
+
+      window.setInterval("update()", INTERVAL);
+    }
+
+    function update() {
+      if (n2 >= N2) {
+        n2 = 0;
+
+        if (n3 >= NPAUSE) {
+          n++;
+
+          if (n >= N) {
+            n = 0;
+          }
+
+          n3 = 0;
+        }
+      }
+
+      if (n2 == 0) {
+        lat = latlng[n].lat();
+        lng = latlng[n].lng();
+
+        if (n == N - 1) {
+          delta_lat = (latlng[0].lat() - latlng[n].lat()) / N2;
+          delta_lng = (latlng[0].lng() - latlng[n].lng()) / N2;
+        } else {
+          delta_lat = (latlng[n+1].lat() - latlng[n].lat()) / N2;
+          delta_lng = (latlng[n+1].lng() - latlng[n].lng()) / N2;
+        }
+      } else if (n3 >= NPAUSE) {
+        lat += delta_lat;
+        lng += delta_lng;
+      }
+
+      if (n3 < NPAUSE) {
+        if (msg[n] == null) {
+          n3 = NPAUSE;
+        } else {
+          if (n3 == 0) {
+            if (msg[n] != null) {
+              infowin.setContent(msg[n]);
+              infowin.setPosition(map.getCenter());
+              infowin.open(map);
+            }
+          }
+
+          n3++;
+
+          if (n3 >= NPAUSE) {
+            infowin.close();
+          }
+        }
+      } else {
+        map.setCenter(new google.maps.LatLng(lat, lng));
+      }
+
+      if (n3 >= NPAUSE) {
+        n2++;
+      }
+    }
+    //]]>
+    </script>
+  </head>
+
+  <body onload="init()">
+    <div style="position:absolute; left:216px; top:208px; overflow:hidden; z-index: 1;">
+    <img src="/web/google-maps-api/img/pteranodon.gif" style="position: relative;">
+    </div>
+    <div id="map" style="position:absolute; z-index:0; left:0px; top:0px; width: 500px; height: 450px"></div>
+  </body>
+</html>

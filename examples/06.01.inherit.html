@@ -1,0 +1,53 @@
+<!DOCTYPE html>   
+<html>
+<head>
+<style> /* This is a CSS style sheet: it adds style to the program output */
+
+</style>
+<script src="./06.01.inherit.js" type="text/javascript"></script>
+<script src="./06.02.extend.js" type="text/javascript"></script>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+	<script>
+		
+		var o = {};
+		o.x = 1;
+		
+		var p = inherit(o);
+		//window.alert("aaaaaaaa");
+		
+		p.y = 2;
+		//window.alert(p.y);
+		//window.alert(p.x);
+		var q = inherit(p);
+		q.z = 3;
+		var s = q.toString();
+		//alert(s);
+		//alert(q.x + q.y);
+		
+		var unitcircle = {r:1,p:10};
+		var c = inherit(unitcircle);
+		c.x = 1;
+		c.r = 2;
+
+		$("body").append("c.r"+c.r);//override
+		$("body").append("<br>unitcircle.r"+unitcircle.r);
+		
+		$("body").append("<br>x in c:"+("x" in c));
+		$("body").append("<br>e in c:"+("e" in c));
+		
+		c.f = function(){};
+		for(z in c){
+			$("body").append("<br>typeof c[z]:"+(typeof c[z])+" value= "+c[z]);
+		
+		}
+		
+		//06.02.extend use keys
+		var objKeys = keys(c);
+		$("body").append("<br>objKeys:"+objKeys.join());
+		$("body").append("<br>Object.keys(c):"+Object.keys(c));
+	</script>
+</body>
+</html>
+

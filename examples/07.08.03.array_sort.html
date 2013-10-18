@@ -1,0 +1,28 @@
+<!DOCTYPE html>   
+<html>
+<head>
+<style> /* This is a CSS style sheet: it adds style to the program output */
+
+</style>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+	<script>
+		
+		var a = ['ant','Bug','cat','Dog'];
+		
+		a.sort();
+		$("body").append("<br>a:"+a.toString());
+		a.sort(function(s,t){
+			var a = s.toLowerCase();
+			var b = t.toLowerCase();
+			if(a<b) return -1;
+			if(a>b) return 1;
+			return 0;
+		});
+		$("body").append("<br>a:"+a.toString());
+		//$("body").append("<br>p.y:"+JSON.stringify(p.y));
+	</script>
+</body>
+</html>
+

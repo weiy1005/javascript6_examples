@@ -1,0 +1,51 @@
+<!DOCTYPE html>   
+<html>
+<head>
+<style> /* This is a CSS style sheet: it adds style to the program output */
+
+</style>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+	<script>
+		
+		var p = {
+			data_prop:"aaa",
+			x:1.0,
+			y:1.0,
+			get r(){return Math.sqrt(this.x*this.x+this.y*this.y);},
+			set r(newvalue){
+				var oldvalue = Math.sqrt(this.x*this.x+this.y*this.y);
+				var ratio = newvalue/oldvalue;
+				this.x *= ratio;
+				this.y *= ratio;
+			}
+		};
+		
+		console.log(p.r);
+
+function Foo(x) {
+    this.initialize(x);
+}
+
+Foo.prototype = {
+    initialize: function (x) {
+		var _x = x;
+		this.getX = function() {return _x};
+		this.setX = function(x) {_x = x};
+    },
+    get _x() { throw new Error("use getter"); },
+    set _x(value) { throw new Error("use setter"); }
+}
+var foo = new Foo(1);
+foo.getX() // => 1
+//foo._x // Error 発生 use getter
+//foo._x = 2; // Error 発生 use setter
+foo.setX(3)
+foo.getX() // => 3
+
+		$("body").append("<br>foo.getX():"+foo.getX());
+	</script>
+</body>
+</html>
+

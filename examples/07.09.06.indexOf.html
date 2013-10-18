@@ -1,0 +1,34 @@
+<!DOCTYPE html>   
+<html>
+<head>
+<style> /* This is a CSS style sheet: it adds style to the program output */
+
+</style>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+	<script>
+		
+		var a = ['ant','Bug','cat','Dog','Bug'];
+		
+		function findall(a,x){
+			var results = [],
+				len = a.length,
+				pos = 0;
+			while(pos < len){
+				pos = a.indexOf(x,pos);
+				if(pos === -1) break;
+				results.push(pos);
+				pos = pos +1;
+			}
+			return results;
+		}
+		
+		b = findall(a,'Bug');
+		
+		$("body").append("<br>findall:"+b.toString());
+		//$("body").append("<br>p.y:"+JSON.stringify(p.y));
+	</script>
+</body>
+</html>
+
